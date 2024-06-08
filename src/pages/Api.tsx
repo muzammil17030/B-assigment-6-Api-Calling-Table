@@ -1,65 +1,71 @@
-import Mytable from "../components/Mytable";
 import { useState } from "react";
 import axios from "axios";
-import { Box,Button } from "@mui/material";
-function Api(){
-    const [userList, setUserList] = useState<any>([]);
-    const getData = () => {
-      axios
-      .get("https://jsonplaceholder.typicode.com/users")
+import { Box} from "@mui/material";
+
+
+
+
+
+
+
+function Api() {
+  const [userData, setProduct] = useState<any>([]);
+  const getData = () => {
+    axios
+      .get("https://fakestoreapi.com/products")
       .then((res) => {
         console.log(res.data[0], "data received");
-        setUserList(res.data);
+        setProduct(res.data);
       })
       .catch((err) => {
         console.log(err, "Error");
       });
-    };
-    
-    
-    return(
-      <Box >
-          <h1 className="text-warning">Assigment of </h1>
-        <h1 className="text-info">API Calling </h1>
-        <Button
-          onClick={getData}
-          sx={{ margin: 1, textTransform: "capitalize", }}
-          variant="contained"
+  };
+
+
+
+
+
+  return (
+    <Box >
+      <h1 className="text-Dark">Click the Button Below <br /> To See the Products</h1>
+     <button className="button" onClick={getData}>Button</button>
+
+      {userData.length && userData.map((e: any) => {
+        return (
+          <div className="div " >
+            <div className="Second">
+           <div className="img" > <img  src={e.image} alt="" /></div>
           
-          color="success"
-          size="large"
-        >
-          Get Table (Api)
-        </Button>
-         <Mytable 
-                  gridCols={[
-                      {
-                          key: 'name',
-                          label: 'User Name'
-                      },
-                      {
-                          key: 'email',
-                          label: 'User Email'
-                      },
-                      {
-                          key: 'phone',
-                          label: 'Phone'
-                      },
-                      {
-                          key: 'website',
-                          label: 'Web URL'
-                      },
-                      {
-                          key: '',
-                          label: 'Delete',
-                          displayField: (row: any) => <Button onClick={() => {
-                              console.log(row)
-                          }} variant="contained"
-                          color="info">Delete</Button>
-                      },
-                  ]} datasource={userList} />
-      </Box>
-    )
+          <div className="third">
+          
+            <p><span className="fs-2" ><b className="text-info"> Title: </b></span>   <b className="fs-4">   {e.title}</b></p>
+            <h6><span className="fs-4" ><b className="text-info">  Discription: </b></span> {e.description}</h6>
+            <h5><span className="fs-4" ><b className="text-info"> Price: </b></span> {e.price}</h5>
+            <h5><span className="fs-4" ><b className="text-info"> Rate: </b></span>{e.rating.rate}</h5>
+            <h5><span className="fs-4 " ><b className="text-info"> Count: </b></span>{e.rating.count}</h5>
+            </div>
+            </div>
+          </div>
+        
+
+
+
+
+
+
+
+
+
+
+
+        
+        )
+      })}
+
+
+    </Box>
+  )
 }
 
 export default Api
